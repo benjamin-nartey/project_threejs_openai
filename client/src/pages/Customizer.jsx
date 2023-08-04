@@ -23,6 +23,8 @@ function Customizer() {
   const [prompt, setPrompt] = useState("");
   const [generatingImage, setGeneratingImage] = useState(false);
 
+  const url = config.production.backendUrl;
+
   const [activeEditorTab, setActiveEditorTab] = useState("");
   const [activeFilterTab, setActiveFilterTab] = useState({
     logoShirt: true,
@@ -56,16 +58,13 @@ function Customizer() {
     try {
       setGeneratingImage(true);
 
-      const response = await fetch(
-        "https://threejs-openai-project-xnyu.onrender.com/api/v1/dalle",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ prompt }),
-        }
-      );
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ prompt }),
+      });
 
       const data = await response.json();
       console.log(data);
